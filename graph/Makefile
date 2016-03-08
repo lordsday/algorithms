@@ -1,10 +1,11 @@
+CFLAGS = -c -std=c99
+
 FLOYD = floyd
 FLOYD_OBJS = floyd.o
 
 DIJKSTRA = dijkstra
 DIJKSTRA_OBJ = dijkstra.o
 
-CFLAGS = -c -std=c99
 
 all: $(FLOYD) $(DIJKSTRA)
 
