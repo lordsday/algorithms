@@ -2,16 +2,16 @@
 #include <string.h>
 
 
-typedef struct Nameval Nameval;
-struct Nameval {
+typedef struct Node Node;
+struct Node {
     char    *name;
     int     value;
-    Nameval *left;  /* lesser */
-    Nameval *right; /* greater */
+    Node    *left;  /* lesser */
+    Node    *right; /* greater */
 };
 
 /* insert: insert newp in treep, return treep */
-Nameval *insert(Nameval *treep, Nameval *newp)
+Node *insert(Node *treep, Node *newp)
 {
     int cmp;
 
@@ -20,7 +20,7 @@ Nameval *insert(Nameval *treep, Nameval *newp)
     cmp = strcmp(newp->name, treep->name);
     if (cmp == 0)
         printf("insert: duplicate entry %s ignored",
-                 newp->name);
+               newp->name);
     else if (cmp < 0)
         treep->left = insert(treep->left, newp);
     else
@@ -29,7 +29,7 @@ Nameval *insert(Nameval *treep, Nameval *newp)
 }
 
 /* lookup: look up name in tree treep */
-Nameval *lookup(Nameval *treep, char *name)
+Node *lookup(Node *treep, char *name)
 {
     int cmp;
 
@@ -45,7 +45,7 @@ Nameval *lookup(Nameval *treep, char *name)
 }
 
 /* nrlookup: non-recursively look up name in tree treep */
-Nameval *nrlookup(Nameval *treep, char *name)
+Node *nrlookup(Node *treep, char *name)
 {
     int cmp;
 
@@ -61,26 +61,25 @@ Nameval *nrlookup(Nameval *treep, char *name)
     return NULL;
 }
 
-
-/* int main(int argc, char *argv[]) { */
-int main() {
-    Nameval records[5] = {
+int main()
+{
+    Node records[5] = {
         {"AEling", 0x00c6, NULL, NULL},
         {"Aacute", 0x00c1, NULL, NULL},
         {"Acirc",  0x00c2, NULL, NULL},
         {"smiley", 0x263A, NULL, NULL},
         {"zeta",   0x03b6, NULL, NULL}
     };
-    Nameval *treep = NULL;
-    Nameval *value = NULL;
+    Node *treep = NULL;
+    Node *node = NULL;
     int i;
 
     for (i = 0; i < 5; i++) {
         treep = insert(treep, &records[i]);
     }
 
-    value = lookup(treep, "zeta");
-    printf("%s\n", value->name);
+    node = lookup(treep, "zeta");
+    printf("%s\n", node->name);
 
     return 0;
 }
