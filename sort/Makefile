@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -c -std=c99
 
-QUICK_SORT = quicksort
-QUICK_SORT_OBJS = quicksort.o
+QUICK_SORT = quick_sort
+QUICK_SORT_OBJS = quick_sort.o
 
 MERGE_SORT = merge_sort
 MERGE_SORT_OBJS = merge_sort.o
