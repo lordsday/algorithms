@@ -1,94 +1,112 @@
-#include <stdio.h>
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
 
-#define N 100
-#define INF 100000
+#define IN 99
+#define N 6
 
-int a[N+1][N+1];
-int visit[N+1];
-int dist[N+1];
-int start, end;
-int n,m;
-
-// input 값 sample
-// 첫번째 라인에는 정점의 개수, 그리고 시작 정점, 도착 정점이 입력
-// 두번째 라인에는 정점별 간선의 입력받을 가중치의 개수(m)가 입력된다.
-// 세번째 라인부터는 정점별 간선의 입력받을 가중치가 m번이 들어온다.
-
-
-/*
-  7 1 7
-  9
-  1 2 4
-  1 3 2
-  2 4 1
-  2 5 2
-  3 4 7
-  3 6 3
-  4 7 3
-  5 7 1
-  6 7 5
-*/
-
-void input()
+char *strrev(char *str)
 {
-    int i,j;
-    int from,to;
-    int w;
+    char *p1, *p2;
 
-    scanf("%d %d %d",&n,&start,&end);
-    scanf("%d",&m);
+    if (! str || ! *str)
+        return str;
 
-    // 각 정점으로 가는 간선의 가중치를 무한대로 초기화한다.(최소값을 구하기위해)
-    for (i = 1;i <= n; i++)
-        for (j = 1; j <=n; j++)
-            if (i != j)
-                a[i][j] = INF;
-
-    for (i = 1; i <= m; i++) // 정점에서 정점으로 가는 간선의 가중치가 입력
+    for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
     {
-        scanf("%d %d %d",&from,&to,&w);
-        a[from][to] = w;
+        *p1 ^= *p2;
+        *p2 ^= *p1;
+        *p1 ^= *p2;
     }
 
-    for (i = 1; i <= n; i++)
-        dist[i] = INF;
+    return str;
 }
 
-void dijkstra()
+int dijsktra(int cost[][N],int source,int target)
 {
-    int i,j;
-    int min;
-    int v;
+    int dist[N],prev[N],selected[N]={0},i,m,min,start,d,j;
+    char path[N];
 
-    dist[start] = 0;        // 시작점의 거리 0
-
-    for (i = 1; i <= n; i++)
+    for (i = 1; i < N; i++)
     {
-        min = INF;
-        for (j = 1 ; j <= n; j++)
+        dist[i] = IN;
+        prev[i] = -1;
+    }
+
+    start = source;
+    selected[start] = 1;
+    dist[start] = 0;
+
+    while (selected[target] == 0)
+    {
+        min = IN;
+        m = 0;
+
+        for (i = 1; i < N; i++)
         {
-            if (visit[j] == 0 && min > dist[j])    // 갈수 있는 정점중에 가장 가까운 정점 선택
+            d = dist[start] + cost[start][i];
+            if (d < dist[i] && selected[i] == 0)
             {
-                min = dist[j];
-                v = j;
+                dist[i] = d;
+                prev[i] = start;
+            }
+
+            if (min > dist[i] && selected[i] == 0)
+            {
+                min = dist[i];
+                m = i;
             }
         }
 
-        visit[v] = 1;   // 가장 가까운 정점으로 방문, i정점에서 가장 가까운 최단경로 v
-
-        for (j = 1; j <= n; j++)
-        {
-            if (dist[j] > dist[v] + a[v][j])       // 방문한 정점을 통해 다른 정점까지의 거리가 짧아지는지 계산하여 누적된값 저장
-                dist[j] = dist[v] + a[v][j];
-        }
+        start = m;
+        selected[start] = 1;
     }
+
+    start = target;
+    j = 0;
+
+    while (start != -1)
+    {
+        path[j++] = start+65;
+        start = prev[start];
+    }
+
+    path[j]='\0';
+    strrev(path);
+    printf("%s", path);
+
+    return dist[target];
 }
 
-
-int main(void)
+int main()
 {
-    input();
-    dijkstra();
-    printf("%d \n",dist[end]);
+    int cost[N][N],i,j,w,co;
+    int source, target,x,y;
+
+    printf("\tShortest Path Algorithm(DIJKSRTRA's ALGORITHM\n\n");
+    for (i = 1; i < N; i++)
+        for (j = 1; j < N; j++)
+            cost[i][j] = IN;
+
+    for (x = 1; x < N; x++)
+    {
+        for (y = x + 1; y < N; y++)
+        {
+            printf("Enter the weight of the path between node %d and %d: ",x,y);
+            scanf("%d",&w);
+            cost[x][y] = cost[y][x] = w;
+        }
+        printf("\n");
+    }
+
+    printf("\nEnter The Source:");
+    scanf("%d", &source);
+
+    printf("\nEnter The target:");
+    scanf("%d", &target);
+
+    co = dijsktra(cost,source,target);
+    printf("\nShortest Path: %d",co);
+
     return 0;
 }
