@@ -1,3 +1,12 @@
+/*
+ * Bellman-Ford Algorithms
+ * - 1:N 경로 구하는 알고리즘
+ * - O(V x E)
+ *   + V: Vertext 수
+ *   + E: Edge 수
+ * - 음수 가중치 계산 가능
+ */
+
 #include <stdio.h>
 
 

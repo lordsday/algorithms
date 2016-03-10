@@ -1,3 +1,10 @@
+/*
+ * Dijkstra Algorithm
+ * - 1:N (or 1:1)
+ * - O(E + VlogV)
+ * - Greedy 알고리즘
+ */
+
 #include<stdio.h>
 #include<string.h>
 #include<math.h>
