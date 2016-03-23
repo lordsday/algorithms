@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -c -std=c99
 
-TARGET = binary_search
-OBJS = binary_search.o
+TARGET = tree
+OBJS = tree.o
 
 $(TARGET): $(OBJS)
 	$(CC) $^ -o $@
