@@ -1,3 +1,8 @@
-# algorithms
+# Algorithms and Data Structures in C
 
-algorithms
+* list
+* tree
+* graph
+* search
+* hash table
+* array
