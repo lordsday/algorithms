@@ -8,7 +8,7 @@ int queue[QUEUESIZE], f=0, r=-1;
 
 // Check if queue is full
 int queuefull() {
-    if(r == QUEUESIZE - 1) {
+    if (r == QUEUESIZE - 1) {
         return 1;
     }
     return 0;
@@ -16,7 +16,7 @@ int queuefull() {
 
 // Check if the queue is empty
 int queueempty() {
-    if(f > r) {
+    if (f > r) {
         return 1;
     }
     return 0;
@@ -25,27 +25,28 @@ int queueempty() {
 // Show queue content
 int queueshow() {
     int i;
-    if(queueempty()) {
+
+    if (queueempty()) {
         printf(" \n The queue is empty\n");
-    } else {
-        printf("Start->");
-        for(i=f; i<=r; i++) {
-            printf("%d ", queue[i]);
-        }
-        printf("<-End");
+        return;
     }
+
+    printf("Start->");
+    for (i = f; i <= r; i++) {
+        printf("%d ", queue[i]);
+    }
+    printf("<-End");
+
     return 0;
 }
 
 // Perform an insert operation.
 int enqueue(int oneelement) {
-    if( queuefull()) {
+    if(queuefull()) {
         printf("\n\n Overflow!!!!\n\n");
-    } else {
-        ++r;
-        queue[r] = oneelement;
-    }
-    return 0;
+        return 0;
+    queue[++r] = oneelement;
+    return 1;
 }
 
 // Perform a delete operation
@@ -53,12 +54,10 @@ int dequeue() {
     int elem;
     if(queueempty()) {
         printf(" \n The queue is empty\n");
-        return(-1);
-    } else {
-        elem=queue[f];
-        f=f+1;
-        return(elem);
+        return -1;
     }
+    elem = queue[f++];
+    return elem;
 }
 
 int main() {
@@ -71,13 +70,13 @@ int main() {
     switch(option) {
         case 1:
             printf("\n\nContent to be Inserted?");
-            scanf("%d",&element);
+            scanf("%d", &element);
             enqueue(element);
             break;
         case 2:
-            element=dequeue();
-            if( element != -1 ) {
-                printf("\n\nDeleted element (with content %d) \n",element);
+            element = dequeue();
+            if (element != -1) {
+                printf("\n\nDeleted element (with content %d) \n", element);
             }
             break;
         case 3:
@@ -92,5 +91,6 @@ int main() {
             break;
         }
     } while(option != 4);
+
     return 0;
 }
