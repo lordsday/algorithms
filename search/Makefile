@@ -1,11 +1,14 @@
 CC = gcc
 CFLAGS = -c -std=c99
-
+LDFLAGS =
+SRCS = binary_search.c
+OBJS = $(SRCS:.c=.o)
 TARGET = binary_search
-OBJS = binary_search.o
+
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ -o $@
+	$(CC) $(LDFLAGS) -o $@ $^
 
 clean:
 	rm -f *.o $(TARGET)

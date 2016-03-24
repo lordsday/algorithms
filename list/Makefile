@@ -1,11 +1,14 @@
 CC = gcc
 CFLAGS = -c -std=c99
-
+LDFLAGS =
+SRCS = list.c
+OBJS = $(SRCS:.c=.o)
 TARGET = list
-OBJS = list.o
+
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ -o $@
+	$(CC) $(LDFLAGS) -o $@ $^
 
 clean:
 	rm -f *.o $(TARGET)

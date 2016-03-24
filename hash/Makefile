@@ -1,11 +1,14 @@
 CC = gcc
 CFLAGS = -c -std=c99
-
+LDFLAGS =
+SRCS = hash.c
+OBJS = $(SRCS:.c=.o)
 TARGET = hash
-OBJS = hash.o
+
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ -o $@
+	$(CC) $(LDFLAGS) -o $@ $^
 
 clean:
 	rm -f *.o $(TARGET)
